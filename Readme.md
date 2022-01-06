@@ -8,9 +8,13 @@ IMT2020021
 IMT2020067
 
 ** GamePlay **
+
 https://iiitbac-my.sharepoint.com/:f:/g/personal/rahul_jain_iiitb_ac_in/El5t2SQ8Y09LhfGCPyrUin8Bb24NU_nWgFrmBbHlTrjidg?e=56dO3n
 
+
 ** Github Repo **
+
+https://github.com/Rahul2332/TarzanSwing_Group27.git
 
 
 
