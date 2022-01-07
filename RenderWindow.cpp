@@ -112,8 +112,8 @@ void RenderWindow::main_menu(LTexture* TextTexture1, LTexture* TextTexture2, LTe
 	SDL_Color textColor2 = {0, 255, 0, 255};
 	SDL_Color textColor3 = {178, 34, 34, 255};
 
-    TTF_Font* Font1 = TTF_OpenFont("/Users/rahuljain/Documents/GameDevelopment/SDL_EXPERIMENTING/SDL_EXPERIMENTING/game.ttf", 52);
-    TTF_Font* Font2 = TTF_OpenFont("/Users/rahuljain/Documents/GameDevelopment/SDL_EXPERIMENTING/SDL_EXPERIMENTING/game.ttf", 38);
+    TTF_Font* Font1 = TTF_OpenFont("game.ttf", 52);
+    TTF_Font* Font2 = TTF_OpenFont("game.ttf", 38);
 
     TextTexture1->loadFromRenderedText("| TARZAN SWING |", textColor1, renderer, Font1);
     TextTexture2->loadFromRenderedText("PLAY", textColor2, renderer, Font2);
@@ -126,7 +126,7 @@ void RenderWindow::main_menu(LTexture* TextTexture1, LTexture* TextTexture2, LTe
 void RenderWindow::score_menu(int TotalScore, LTexture* TextTexture1, LTexture* TextTexture2)
 {
     SDL_Color textColor = {255, 255, 0, 255};
-    TTF_Font* Font = TTF_OpenFont("/Users/rahuljain/Documents/GameDevelopment/SDL_EXPERIMENTING/SDL_EXPERIMENTING/game.ttf", 26);
+    TTF_Font* Font = TTF_OpenFont("game.ttf", 26);
     std::string str1 = std::to_string(TotalScore);
     std::string str2 = std::to_string(TotalScore/100);
     TextTexture1->loadFromRenderedText("Score : "+str1, textColor, renderer, Font);
@@ -135,7 +135,7 @@ void RenderWindow::score_menu(int TotalScore, LTexture* TextTexture1, LTexture* 
 }
 
 
-void RenderWindow::end_menu(int TotalScore, int HighScore, LTexture* TextTexture, LTexture* TextTexture1, LTexture* TextTexture2, LTexture* TextTexture3, LTexture* TextTexture4, LTexture* TextTexture5, LTexture* TextTexture6)
+void RenderWindow::end_menu(int TotalScore, set<int> ScoreSet, LTexture* TextTexture, LTexture* TextTexture1, LTexture* TextTexture2, LTexture* TextTexture3, LTexture* TextTexture4, LTexture* TextTexture5, LTexture* TextTexture6, LTexture* TextTexture61, LTexture* TextTexture62, LTexture* TextTexture63)
 {
     SDL_Color textColor = {189, 183, 107, 255};
 	SDL_Color textColor1 = {255, 102, 0, 255};
@@ -143,20 +143,37 @@ void RenderWindow::end_menu(int TotalScore, int HighScore, LTexture* TextTexture
 	SDL_Color textColor3 = {155, 255, 204, 255};
     SDL_Color textColor4 = {178, 34, 34, 255};
 
-    TTF_Font* Font = TTF_OpenFont("/Users/rahuljain/Documents/GameDevelopment/SDL_EXPERIMENTING/SDL_EXPERIMENTING/game_2.ttf", 40);
-    TTF_Font* Font1 = TTF_OpenFont("/Users/rahuljain/Documents/GameDevelopment/SDL_EXPERIMENTING/SDL_EXPERIMENTING/game.ttf", 52);
-    TTF_Font* Font2 = TTF_OpenFont("/Users/rahuljain/Documents/GameDevelopment/SDL_EXPERIMENTING/SDL_EXPERIMENTING/game.ttf", 24);
-    TTF_Font* Font3 = TTF_OpenFont("/Users/rahuljain/Documents/GameDevelopment/SDL_EXPERIMENTING/SDL_EXPERIMENTING/game.ttf", 36);
+    TTF_Font* Font = TTF_OpenFont("game_2.ttf", 40);
+    TTF_Font* Font1 = TTF_OpenFont("game.ttf", 52);
+    TTF_Font* Font2 = TTF_OpenFont("game.ttf", 24);
+    TTF_Font* Font3 = TTF_OpenFont("game.ttf", 36);
 
+    vector<string> ScoreString;
+    
     std::string str1 = std::to_string(TotalScore/100);
     std::string str2 = std::to_string(TotalScore);
-    std::string str3 = std::to_string(HighScore);
+//    std::string str3 = std::to_string(*ScoreVector.end());
+//    std::string str4 = std::to_string(ScoreVector[1]);
+//    std::string str5 = std::to_string(ScoreVector[2]);
+    
+    set<int>::reverse_iterator rit;
+    
+    for (rit = ScoreSet.rbegin(); rit != ScoreSet.rend(); rit++)
+    {
+        ScoreString.push_back(to_string(*rit) );
+    }
+    
+    
 
     TextTexture1->loadFromRenderedText("lmao ded", textColor1, renderer, Font1);
     TextTexture->loadFromRenderedText("f", textColor, renderer, Font);
     TextTexture2->loadFromRenderedText("Kills : "+str1, textColor2, renderer, Font2);
     TextTexture3->loadFromRenderedText("Score : "+str2, textColor2, renderer, Font2);
-    TextTexture6->loadFromRenderedText("High Score : "+str3, textColor2, renderer, Font2);
+    TextTexture6->loadFromRenderedText("LeaderBoard:", textColor2, renderer, Font2);
+    TextTexture61->loadFromRenderedText("1. " + ScoreString[0], textColor1, renderer, Font2);
+    TextTexture62->loadFromRenderedText("2. " + ScoreString[1], textColor1, renderer, Font2);
+    TextTexture63->loadFromRenderedText("3. " + ScoreString[2], textColor1, renderer, Font2);
+    
     TextTexture4->loadFromRenderedText("RETRY", textColor3, renderer, Font3);
     TextTexture5->loadFromRenderedText("EXIT", textColor4, renderer, Font3);
     

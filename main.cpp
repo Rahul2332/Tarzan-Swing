@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <vector>
+#include <set>
 #include <fstream>
 
 #include "RenderWindow.h"
@@ -24,16 +25,18 @@ using namespace std;
 int main(int argc, char* args[])
 {
     
-    ofstream outputFile("/Users/rahuljain/Documents/GameDevelopment/SDL_EXPERIMENTING/SDL_EXPERIMENTING/ScoreBoard.txt");
+    
+//    ofstream outputFile("ScoreBoard.txt");
+    set<int> ScoreSet;
     
     Mix_OpenAudio(MIX_DEFAULT_FREQUENCY,MIX_DEFAULT_FORMAT,2,4096);
     Mix_Music *music = NULL;
     Mix_Chunk *sound = NULL;
     Mix_Chunk *blast = NULL;
     
-    music = Mix_LoadMUS("/Users/rahuljain/Documents/GameDevelopment/SDL_EXPERIMENTING/SDL_EXPERIMENTING/BGMgameOriginal.mp3");
-    sound = Mix_LoadWAV("/Users/rahuljain/Documents/GameDevelopment/SDL_EXPERIMENTING/SDL_EXPERIMENTING/sound.wav");
-    blast = Mix_LoadWAV("/Users/rahuljain/Documents/GameDevelopment/SDL_EXPERIMENTING/SDL_EXPERIMENTING/blast.mp3");
+    music = Mix_LoadMUS("BGMgameOriginal.mp3");
+    sound = Mix_LoadWAV("sound.wav");
+    blast = Mix_LoadWAV("blast.mp3");
     Mix_PlayMusic(music,-1);
     
     if(SDL_Init(SDL_INIT_VIDEO) > 0)
@@ -67,6 +70,10 @@ int main(int argc, char* args[])
     LTexture gTextTexture4;
     LTexture gTextTexture5;
     LTexture gTextTexture6;
+    LTexture gTextTexture61;
+    LTexture gTextTexture62;
+    LTexture gTextTexture63;
+    
     LTexture gTextTexture7;
     LTexture gTextTexture8;
 
@@ -89,17 +96,18 @@ int main(int argc, char* args[])
     }
     
     class ObjectManager* om = new ObjectManager(WindowWidth, WindowHeight, mainObject);
-    int spawnCounter=10;   
+    int spawnCounter=0;   
 
     statement:
     if(main_game == true && end_menu == false){
-        for(int i=0;i<10;i++){
-            om->Spawn(enemyList, frendList, i*WindowWidth);
+        for(int i=0;i<7;i++){
+            om->Spawn(enemyList, frendList, spawnCounter*WindowWidth);
+            spawnCounter++;
         }                   
     }
     class Lava* lava = new Lava(0, 700, 500, 1280);
     
-    SDL_Texture* grassTexture = window.loadTexture("/Users/rahuljain/Documents/GameDevelopment/SDL_EXPERIMENTING/SDL_EXPERIMENTING/BLACK.jpg");
+    SDL_Texture* grassTexture = window.loadTexture("BLACK.jpg");
 
     
     
@@ -216,13 +224,6 @@ int main(int argc, char* args[])
                     lava->setAcc_y(-1*gravity);
                 }
 
-                if(SDL_GetTicks()%15000<10){
-                    for(int i=0; i<5; i++){
-                        om->Spawn(enemyList, frendList, spawnCounter*WindowWidth);
-                        spawnCounter++; 
-                    }
-                }
-
                 for(auto it:enemyList) it->UpdatePosn();
                 for(auto it:frendList) it->UpdatePosn(); 
                 lava->UpdatePosn();
@@ -233,7 +234,50 @@ int main(int argc, char* args[])
                 end_menu = true;
                 main_game = false;
                 if(TotalScore > HighScore) HighScore = TotalScore;
-                window.end_menu(TotalScore, HighScore, &gTextTexture, &gTextTexture1, &gTextTexture2, &gTextTexture3, &gTextTexture4, &gTextTexture5, &gTextTexture6);
+                
+                
+                string filename("ScoreBoard.txt");
+//                    vector<int> numbers;
+                    int number;
+
+                    ifstream input_file(filename);
+                    if (!input_file.is_open()) {
+                        cerr << "Could not open the file - '"
+                             << filename << "'" << endl;
+//                        return EXIT_FAILURE;
+                    }
+                    
+                    else
+                    {
+                        while (input_file >> number) {
+                            ScoreSet.insert(number);
+                        }
+                        ScoreSet.insert(HighScore);
+//                        sort(ScoreSet.begin(), ScoreSet.end(), greater<int>() );
+                        for (const auto &i : ScoreSet) {
+                            cout << i << "; ";
+                        }
+                        cout << endl;
+                    }
+                    input_file.close();
+                
+                
+                ofstream OutputFile;
+                //File open
+                OutputFile.open("ScoreBoard.txt", std::ofstream::out | std::ofstream::trunc);
+                
+                for(int it: ScoreSet)
+                {
+                    OutputFile<<it<<endl;
+                }
+                
+                
+                //File close
+                OutputFile.close();
+                
+                
+                window.end_menu(TotalScore, ScoreSet, &gTextTexture, &gTextTexture1, &gTextTexture2, &gTextTexture3, &gTextTexture4, &gTextTexture5, &gTextTexture6 ,&gTextTexture61, &gTextTexture62, &gTextTexture63);
+                
             }
             window.score_menu(TotalScore, &gTextTexture7, &gTextTexture8);
             gTextTexture7.render(1100, 10, gRenderer);
@@ -250,7 +294,12 @@ int main(int argc, char* args[])
             gTextTexture1.render((WindowWidth - gTextTexture1.getWidth()) / 2, 100, gRenderer);
 			gTextTexture2.render(500, 220, gRenderer);
 			gTextTexture3.render(500, 280, gRenderer);
-            gTextTexture6.render(720, 250, gRenderer);
+            gTextTexture6.render(720, 220, gRenderer);
+            
+            gTextTexture61.render(760, 250, gRenderer);
+            gTextTexture62.render(760, 280, gRenderer);
+            gTextTexture63.render(760, 310, gRenderer);
+            
             gTextTexture4.render((WindowWidth - gTextTexture4.getWidth()) / 2, 400, gRenderer);
             gTextTexture5.render((WindowWidth - gTextTexture5.getWidth()) / 2, 540, gRenderer);
 

@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <math.h>
-#define gravity 0.2
+#define gravity 0.4
 
 struct Vec2{
     double x,y;
