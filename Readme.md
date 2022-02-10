@@ -1,4 +1,4 @@
-# Tarzan Swing by Group27
+# Tarzan Swing
 
 ** GamePlay and screenshots**
 
@@ -9,14 +9,27 @@ https://iiitbac-my.sharepoint.com/:f:/g/personal/rahul_jain_iiitb_ac_in/El5t2SQ8
 
 https://github.com/Rahul2332/TarzanSwing_Group27.git
 
+**My Contribution:**
+- Main, Friend and Enemy Object Creation
+- Rope Creation and Collission detection
+- Circular Motion
+- Implemented ScoreBooard
 
-** Instructions to run the game using terminal: **
+**Group Members:**
+IMT2020117 Rahul Jain
+IMT2020021 Chakradhar Varanasi
+IMT2020105 Rakshit Bang
+IMT2020558 Ram
+IMT2020067 Rishi 
+
+
+**Instructions to run the game using terminal:**
 
 - make
 - ./TarzanSwing
 
 
-** Controls of the game: **
+**Controls of the game:**
 
 - Press and hold left mouse button to draw a rope from main object to the object near to the click.
 As long as user holds on to the left button rope will remain attached to that object and object will swing in cirular motion around that hook.
@@ -27,7 +40,7 @@ with conservation of momentum.
 
 
 
-** Game Features: **
+**Game Features:**
 
 - Game starts with main object freely falling under the affect of gravity.
 - User presses and holds left mouse button and main object attaches to the object near to the click by a rope, and does circular motion around it.
